@@ -12,22 +12,14 @@
 
     navigator.mediaDevices.getUserMedia(constraints).
       then((stream) => {video.srcObject = stream; window.localStream = stream;});
+    console.log('camera started');
   }
   
   function pauseCamera() {
     window.localStream.getTracks().forEach(function(track) {
       if (track.readyState == 'live') {
-        track.enabled = false;
+        track.stop();
         console.log('camera paused');
-      }
-    });
-  }
-  
-  function resumeCamera() {
-    window.localStream.getTracks().forEach(function(track) {
-      if (track.readyState == 'ended') {
-        track.enabled = true;
-        console.log('camera resumed');
       }
     });
   }
@@ -50,7 +42,7 @@
     if (document[hidden]) {
       pauseCamera();
     } else {
-      resumeCamera();
+      startCamera();
     }
   }
   
