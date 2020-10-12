@@ -1,12 +1,26 @@
 <video autoplay></video>
+<button onclick="disableCamera()">Click me</button>
 
 <script>
-const constraints = {
-  video: true
-};
+  function enableCamera() {
+    const constraints = {
+      video: true
+    };
 
-const video = document.querySelector('video');
+    const video = document.querySelector('video');
 
-navigator.mediaDevices.getUserMedia(constraints).
-  then((stream) => {video.srcObject = stream});
+    navigator.mediaDevices.getUserMedia(constraints).
+      then((stream) => {video.srcObject = stream; window.localStream = stream;});
+  }
+  
+  function disableCamera() {
+    var tracks = window.localStream.getTracks();
+    if (tracks.length > 0) {
+      tracks[0].stop();
+    } else {
+      enableCamera();
+    }
+  }
+  
+  enableCamera();
 </script>
