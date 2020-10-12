@@ -25,7 +25,7 @@
   
   function resumeCamera() {
     window.localStream.getTracks().forEach(function(track) {
-      if (track.readyState == 'live') {
+      if (track.readyState == 'ended') {
         track.enabled = true;
         console.log('camera resumed');
       }
